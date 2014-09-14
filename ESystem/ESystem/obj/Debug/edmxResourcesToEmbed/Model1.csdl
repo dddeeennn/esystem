@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ex_systemModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ex_systemEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="esAnswers" EntityType="ex_systemModel.esAnswer" />
+    <EntitySet Name="esNodes" EntityType="ex_systemModel.esNode" />
+  </EntityContainer>
+  <EntityType Name="esAnswer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="idNodeQuestion" Type="Int32" Nullable="false" />
+    <Property Name="data" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="idNodeSubject" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="esNode">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="idNode" Type="Int32" Nullable="false" />
+    <Property Name="data" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="isLeaf" Type="Boolean" Nullable="false" />
+    <Property Name="idParentNode" Type="Int32" Nullable="false" />
+  </EntityType>
+</Schema>

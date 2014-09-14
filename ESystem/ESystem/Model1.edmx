@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ex_systemModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="ex_systemModelStoreContainer">
+          <EntitySet Name="esAnswers" EntityType="ex_systemModel.Store.esAnswers" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="esNodes" EntityType="ex_systemModel.Store.esNodes" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="esAnswers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idNodeQuestion" Type="int" Nullable="false" />
+          <Property Name="data" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="idNodeSubject" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="esNodes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idNode" Type="int" Nullable="false" />
+          <Property Name="data" Type="nvarchar(max)" />
+          <Property Name="isLeaf" Type="bit" Nullable="false" />
+          <Property Name="idParentNode" Type="int" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ex_systemModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ex_systemEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="esAnswers" EntityType="ex_systemModel.esAnswer" />
+          <EntitySet Name="esNodes" EntityType="ex_systemModel.esNode" />
+        </EntityContainer>
+        <EntityType Name="esAnswer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="idNodeQuestion" Type="Int32" Nullable="false" />
+          <Property Name="data" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="idNodeSubject" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="esNode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="idNode" Type="Int32" Nullable="false" />
+          <Property Name="data" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="isLeaf" Type="Boolean" Nullable="false" />
+          <Property Name="idParentNode" Type="Int32" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ex_systemModelStoreContainer" CdmEntityContainer="ex_systemEntities">
+          <EntitySetMapping Name="esAnswers">
+            <EntityTypeMapping TypeName="ex_systemModel.esAnswer">
+              <MappingFragment StoreEntitySet="esAnswers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idNodeQuestion" ColumnName="idNodeQuestion" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="idNodeSubject" ColumnName="idNodeSubject" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="esNodes">
+            <EntityTypeMapping TypeName="ex_systemModel.esNode">
+              <MappingFragment StoreEntitySet="esNodes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idNode" ColumnName="idNode" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="isLeaf" ColumnName="isLeaf" />
+                <ScalarProperty Name="idParentNode" ColumnName="idParentNode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Default" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

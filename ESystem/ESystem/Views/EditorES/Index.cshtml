@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Редактор  экспертной системы</h2>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        @Html.ActionLink("Добавить вопрос", "AddQuestion", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Редактировать список вопросов", "ListQueEditor", null, new { @class = "btn btn-primary" })
+    </div>
+</div>

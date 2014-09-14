@@ -1,0 +1,36 @@
+﻿@using ESystem.Infrastructure
+@model ESystem.Models.QuestionDisplayModel
+@{
+    ViewBag.Title = "ExecuteES";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(x=>x.Question.Id)
+    @Html.HiddenFor(x=>x.Question.ParentId)
+    <h2>Определение предмета</h2>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2">Вопрос</div>
+            <div class="col-sm-10">@Html.TextAreaFor(x => x.Question.Data, new {@readonly="readonly"})</div>
+        </div>
+        <div class="form-group">
+            
+            @foreach (Answer answer in Model.Answers)
+            {
+                <span>
+                    <button type="submit" class="btn btn-primary answer" data-answerid="@answer.Id">@answer.Data</button>
+                </span>
+            }
+            <span> <button type="submit" class="btn btn-primary answer" data-answerid="0">Не знаю</button></span>
+        </div>
+    </div>
+    @Html.HiddenFor(x=>x.SelectedAnswerId)
+}
+<script type="text/javascript">
+    $(".answer").click(function() {
+        var id = $(this).data("answerid");
+        $("#SelectedAnswerId").val(id);
+    });
+</script>

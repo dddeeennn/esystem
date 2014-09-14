@@ -1,0 +1,46 @@
+﻿@model ESystem.Models.QuestionListModel
+@{
+    ViewBag.Title = "SelectExistingQuestion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Выбрать из существующих вопросов</h2>
+@using (Html.BeginForm())
+{
+
+    var selectedList = Model.Questions.Select(questionModel => new SelectListItem
+    {
+        Text = questionModel.Data,
+        Value = questionModel.Id.ToString()
+    }).ToList();
+
+    var list = new SelectList(selectedList, "Value", "Text");
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-5">
+                @Html.DropDownListFor(x => x.SelectedQuestionId, @list, new
+                {
+                    id = "question-list",
+                    @class = "form-control"
+                })
+            </div>
+            <div class="col-sm-7">
+                <p id="que-content"></p>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Да</button>
+            <span>@Html.ActionLink("Нет", "AddQuestion", null, new { @class = "btn btn-primary" }) </span>
+        </div>
+    </div>
+    <input type="hidden" id="SelectedQuestionData" name="SelectedQuestionData" value=""/>
+}
+<script type="text/javascript">
+    var data = '';
+    $('#question-list').change(function () {
+        data = $('select option:selected').text();
+        $('#que-content').text(data);
+        $('#SelectedQuestionData').val(data);
+    });
+    
+</script>

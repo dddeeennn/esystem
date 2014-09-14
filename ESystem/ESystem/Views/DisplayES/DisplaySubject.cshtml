@@ -1,0 +1,26 @@
+﻿@model ESystem.Models.SubjectModel
+
+@{
+    ViewBag.Title = "DisplaySubject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="form-horizontal">
+    <div class="form-group">
+        @if (Model != null)
+        {
+            <h2>Предмет определен!</h2>
+            <span>Весьма вероятно это ...</span><h2 class="label label-success" style="font-size: 15px;">@Html.DisplayFor(x => x.Data)</h2>
+        }
+        else
+        {
+            <h2 class="label label-danger">Увы... Система не смогла определить предмет :(</h2>
+    
+        }
+    </div>
+
+    <div class="form-group">
+        @Html.ActionLink("Попробовать еще!", "Index", "", new { @class = "btn btn-primary" })
+    </div>
+</div>
+
+

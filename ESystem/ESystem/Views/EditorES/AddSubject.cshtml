@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "AddSubject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Добавить предмет</h2>
+
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label>Выбрать из существующих?</label>
+    </div>
+    <div class="form-group">
+        @Html.ActionLink("Да", "SelectExistingSubject", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Нет", "InputSubject", null, new { @class = "btn btn-primary" })
+    </div>
+</div>

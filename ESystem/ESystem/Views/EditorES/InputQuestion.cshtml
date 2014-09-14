@@ -1,0 +1,23 @@
+﻿@model ESystem.Models.QuestionModel
+@{
+    ViewBag.Title = "InputQuestion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Ввод вопроса</h2>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(x => x.ParentId)
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2"><label>Вопрос</label></div>
+            <div class="col-sm-10">@Html.TextAreaFor(x => x.Data, new { @class = "form-control" })</div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Да</button>
+            @Html.ActionLink("Нет", "AddQuestion", null, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+}
