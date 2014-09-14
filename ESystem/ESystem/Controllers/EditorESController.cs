@@ -146,8 +146,16 @@ namespace ESystem.Controllers
 
         public ActionResult SaveQue(int id, string data, int parentId)
         {
-            NodeStore.Ctx.UpdateNode(new Question(id, data, parentId));
-            return Json(new { });
+            try
+            {
+                NodeStore.Ctx.UpdateNode(new Question(id, data, parentId));
+                return Json(new { code = 0 },JsonRequestBehavior.AllowGet);
+
+            }
+            catch
+            {
+                return Json(new { code = 1 }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult InputSubject()

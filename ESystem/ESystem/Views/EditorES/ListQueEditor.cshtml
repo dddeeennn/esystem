@@ -33,6 +33,10 @@
 
 <script>
     (function () {
+        $('table').on('mousedown', function(event) {
+            event.preventDefault();
+        });
+
         $('.dynamic-content').on('dblclick', function () {
 
             var curEditor = $(document).find('#editor');
@@ -42,7 +46,7 @@
             if (curEditor.length) {
                 parent = curEditor.closest('tr');
 
-                completeEdit(parent.data('id'), curEditor.find('input').val(), parent.data('parent'), curEditor.closest('.dynamic-content'));
+                completeEdit(parent.data('id'), curEditor.find('input').val(), parent.data('parent'), curEditor.closest('.dynamic-content'), parent);
             }
 
 
@@ -56,7 +60,7 @@
             var saveBtn = $("<button class='btn btn-success'>Сохранить</button>");
 
             saveBtn.on('click', function () {
-                completeEdit(parent.data('id'), editor.find('input').val(), parent.data('parent'), self);
+                completeEdit(parent.data('id'), editor.find('input').val(), parent.data('parent'), self, parent);
             });
 
             editor.append(textarea).append(saveBtn);
@@ -66,7 +70,7 @@
         });
     })();
 
-    function completeEdit(id, value, parentId, container) {
+    function completeEdit(id, value, parentId, container, parent) {
         container.html(value);
 
         var params = {
@@ -75,7 +79,29 @@
             parentId: parentId
         };
 
-        $.ajax('SaveQue', { data: params });
+        $.ajax('SaveQue', {
+            data: params, success: function (response) {
+                if (response) {
+                    if (response.code == 0) {
+                        container.append('<span class="label label-success pull-right" id="state">Успешно сохранено!</span>');
+                        parent.addClass('success');
+                    } else {
+                        errorHandler(container, parent);
+                        container.html($('<span class="label label-danger pull-right" >Не сохранено!Ошибка!</span>'));
+                        parent.addClass('error');
+                    }
+                }
+                setTimeout(function () {
+                    $('#state').remove();
+                    parent.removeClass('success error');
+                }, 3000);
+            }, error: function () { errorHandler(container, parent); }
+        });
+    }
+
+    function errorHandler(container, parent) {
+        container.html($('<span class="label label-danger" >Не сохранено! Ошибка!</span>'));
+        parent.addClass('error');
     }
 
     function setActive(parentId) {
