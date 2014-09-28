@@ -22,5 +22,6 @@
     <Property Name="data" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="isLeaf" Type="Boolean" Nullable="false" />
     <Property Name="idParentNode" Type="Int32" Nullable="false" />
+    <Property Type="Boolean" Name="isRemove" Nullable="false" />
   </EntityType>
 </Schema>

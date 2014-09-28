@@ -31,9 +31,16 @@ namespace ESystem.Models
         public SubjectModel() { }
 
         public SubjectModel(int id, string data)
+            : this(id, data, 0)
+        {
+
+        }
+
+        public SubjectModel(int id, string data, int parentId)
         {
             Id = id;
             Data = data;
+            ParentId = parentId;
         }
     }
 }

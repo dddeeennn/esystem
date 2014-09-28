@@ -27,6 +27,10 @@ a {
         color: #333;
     }
 
+    textarea {
+    resize: none;
+}
+
 header, footer, hgroup,
 nav, section {
     display: block;

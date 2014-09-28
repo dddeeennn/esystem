@@ -9,8 +9,8 @@ namespace ESystem.Infrastructure
         public Stack<Question> QueStack;
         public Stack<LevelTreeNode> LevelTree = new Stack<LevelTreeNode>();
         private ex_systemEntities _db;
-        public Stack<Question> FirstLevelQuestions; 
-        public List<int> QuestionAsked = new List<int>(); 
+        public Stack<Question> FirstLevelQuestions;
+        public List<int> QuestionAsked = new List<int>();
 
         public NodeHanderService()
         {
@@ -21,14 +21,14 @@ namespace ESystem.Infrastructure
         {
             var ques = GetQuestions().Where(x => x.ParentId == 1).ToArray(); //its questions of 1 level of graph
             FirstLevelQuestions = new Stack<Question>(ques);
-            QueStack= new Stack<Question>(ques);
+            QueStack = new Stack<Question>(ques);
         }
 
         public List<INode> GetAllNodes()
         {
             var nodes = new List<INode>();
 
-            foreach (var node in _db.esNodes)
+            foreach (var node in _db.esNodes.Where(x => x.isRemove == false))
             {
                 if (node.isLeaf)
                 {
@@ -39,7 +39,7 @@ namespace ESystem.Infrastructure
                     nodes.Add(new Question(node.idNode, node.data, node.idParentNode));
                 }
             }
-            
+
             //foreach (var node in nodes)
             //{
             //    node.Parent = nodes.FirstOrDefault(x => x.Id == node.ParentId);
@@ -136,6 +136,12 @@ namespace ESystem.Infrastructure
             }
 
             return list;
+        }
+
+        public void RemoveNode(int id)
+        {
+            _db.esNodes.First(x => x.id == id).isRemove=true;
+            _db.SaveChanges();
         }
     }
 }

@@ -276,13 +276,15 @@ namespace ESystem
         /// <param name="idNode">Initial value of the idNode property.</param>
         /// <param name="isLeaf">Initial value of the isLeaf property.</param>
         /// <param name="idParentNode">Initial value of the idParentNode property.</param>
-        public static esNode CreateesNode(global::System.Int32 id, global::System.Int32 idNode, global::System.Boolean isLeaf, global::System.Int32 idParentNode)
+        /// <param name="isRemove">Initial value of the isRemove property.</param>
+        public static esNode CreateesNode(global::System.Int32 id, global::System.Int32 idNode, global::System.Boolean isLeaf, global::System.Int32 idParentNode, global::System.Boolean isRemove)
         {
             esNode esNode = new esNode();
             esNode.id = id;
             esNode.idNode = idNode;
             esNode.isLeaf = isLeaf;
             esNode.idParentNode = idParentNode;
+            esNode.isRemove = isRemove;
             return esNode;
         }
 
@@ -412,6 +414,30 @@ namespace ESystem
         private global::System.Int32 _idParentNode;
         partial void OnidParentNodeChanging(global::System.Int32 value);
         partial void OnidParentNodeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean isRemove
+        {
+            get
+            {
+                return _isRemove;
+            }
+            set
+            {
+                OnisRemoveChanging(value);
+                ReportPropertyChanging("isRemove");
+                _isRemove = StructuralObject.SetValidValue(value, "isRemove");
+                ReportPropertyChanged("isRemove");
+                OnisRemoveChanged();
+            }
+        }
+        private global::System.Boolean _isRemove;
+        partial void OnisRemoveChanging(global::System.Boolean value);
+        partial void OnisRemoveChanged();
 
         #endregion
 

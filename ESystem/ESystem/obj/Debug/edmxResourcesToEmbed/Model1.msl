@@ -14,6 +14,7 @@
     <EntitySetMapping Name="esNodes">
       <EntityTypeMapping TypeName="ex_systemModel.esNode">
         <MappingFragment StoreEntitySet="esNodes">
+          <ScalarProperty Name="isRemove" ColumnName="isRemove" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="idNode" ColumnName="idNode" />
           <ScalarProperty Name="data" ColumnName="data" />

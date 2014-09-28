@@ -4,36 +4,61 @@
 }
 
 <h2>Список вопросов</h2>
-<table class="table">
-    <thead>
-        <th class="col-sm-1">Номер вопроса</th>
-        <th class="col-sm-10">Текст вопроса</th>
-        <th class="col-sm-1" title="Ссылка на родительский элемент"><i class="fa fa-link"></i></th>
-    </thead>
-    <tbody>
-        @foreach (var que in Model)
-        {
-            <tr data-id="@que.Id" data-parent="@que.ParentId">
-                <td>@que.Id</td>
-                @if (que.Id == 1)
-                {
-                    <td>корневой вопрос</td>
-                }
-                else
-                {
-                    <td class="dynamic-content">@que.Data</td>
-                }
-                <td>
-                    <a href="#" onclick="setActive(@que.ParentId)">@(que.ParentId == 0 ? "-" : @que.ParentId + "")</a>
-                </td>
-            </tr>    
-        }
-    </tbody>
-</table>
-
+<div class="form-horizontal">
+    <div class="form-group col-sm-12">
+        @Html.ActionLink("Назад...", "Index", null, new { @class = "btn btn-primary" })
+    </div>
+    <table class="table">
+        <thead>
+            <th class="col-sm-1">Номер вопроса</th>
+            <th class="col-sm-9">Текст вопроса</th>
+            <th class="col-sm-1" title="Ссылка на родительский элемент"><i class="fa fa-link"></i></th>
+            <th class="col-sm-1" title="удалить элемент"><span class="glyphicon glyphicon-trash"></span></th>
+        </thead>
+        <tbody>
+            @foreach (var que in Model)
+            {
+                <tr data-id="@que.Id" data-parent="@que.ParentId">
+                    <td>@que.Id</td>
+                    @if (que.Id == 1)
+                    {
+                        <td>корень дерева вопросов</td>
+                    }
+                    else
+                    {
+                        <td class="dynamic-content">@que.Data</td>
+                    }
+                    <td>
+                        <a href="#" onclick="setActive(@que.ParentId)">@(que.ParentId == 0 ? "-" : @que.ParentId + "")</a>
+                    </td>
+                    <td>
+                        <a href="" data-url="@Url.Action("RemoveNode", new { id = que.Id })" style="color: #e80c4d" class="remove-node glyphicon glyphicon-remove"></a>
+                    </td>
+                </tr>    
+            }
+        </tbody>
+    </table>
+</div>
 <script>
+
+    $(".remove-node").click(function (event) {
+        event.preventDefault();
+        var url = $(this).data('url');
+
+        var parent = $(this).closest('tr');
+        $.ajax(
+        {
+            url: url,
+            success: function () {
+                parent.hide();
+            },
+            erorr: function () {
+                errorHandler(null, parent);
+            }
+        });
+    });
     (function () {
-        $('table').on('mousedown', function(event) {
+        $('table').on('mousedown', function (event) {
             event.preventDefault();
         });
 
@@ -57,7 +82,7 @@
 
             var textarea = $("<input type='text' class='form-control' style='margin-right:5px;min-width: 650px;'>").val(self.text());
 
-            var saveBtn = $("<button class='btn btn-success'>Сохранить</button>");
+            var saveBtn = $("<button class='btn btn-success glyphicon glyphicon-ok'></button>");
 
             saveBtn.on('click', function () {
                 completeEdit(parent.data('id'), editor.find('input').val(), parent.data('parent'), self, parent);
@@ -100,7 +125,9 @@
     }
 
     function errorHandler(container, parent) {
-        container.html($('<span class="label label-danger" >Не сохранено! Ошибка!</span>'));
+        if (container)
+            container.html($('<span class="label label-danger" >Не сохранено! Ошибка!</span>'));
+
         parent.addClass('error');
     }
 

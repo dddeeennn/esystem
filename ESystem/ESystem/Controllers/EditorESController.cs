@@ -149,8 +149,21 @@ namespace ESystem.Controllers
             try
             {
                 NodeStore.Ctx.UpdateNode(new Question(id, data, parentId));
-                return Json(new { code = 0 },JsonRequestBehavior.AllowGet);
+                return Json(new { code = 0 }, JsonRequestBehavior.AllowGet);
 
+            }
+            catch
+            {
+                return Json(new { code = 1 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult RemoveNode(int id)
+        {
+            try
+            {
+                NodeStore.Ctx.RemoveNode(id);
+                return Json(new { code = 0 }, JsonRequestBehavior.AllowGet);
             }
             catch
             {

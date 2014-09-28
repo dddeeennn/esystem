@@ -22,5 +22,6 @@
     <Property Name="data" Type="nvarchar(max)" />
     <Property Name="isLeaf" Type="bit" Nullable="false" />
     <Property Name="idParentNode" Type="int" Nullable="false" />
+    <Property Name="isRemove" Type="bit" Nullable="false" />
   </EntityType>
 </Schema>
