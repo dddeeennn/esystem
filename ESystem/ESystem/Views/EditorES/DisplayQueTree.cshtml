@@ -1,0 +1,305 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Tree of questions</title>
+
+    <!-- CSS Files -->
+
+    <link href="@Url.Content("~/Content/JitExamples/css/base.css")" rel="stylesheet"/>
+    <link href="@Url.Content("~/Content/JitExamples/css/Spacetree.css")" rel="stylesheet"/>
+    <!--[if IE]><script src="@Url.Content("~/Scripts/excanvas.js")"></script><![endif]-->
+
+    <!-- JIT Library File -->
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jit.js")"></script>
+
+</head>
+
+<body onload="init();">
+
+    <h2>Дерево вопросов</h2>
+    <a href="@Url.Action("Index")" style="float: left" >Назад</a>
+    <div id="container">
+
+        <div id="left-container">
+            <div class="text">
+                <h4>Анимрованное дерево вопросов</h4>
+                <b>Нажав</b> на узел можно выбрать его<br />
+                <br />
+                Вы можете <b>выбрать ориентацию дерева</b> с помощью настроек справа.<br />
+                <br />
+                Вы можете <b>изменять режим отображения</b> из <em>стандартного</em>
+                в режим, где корнем является <em>выбранная вершина</em>.<br />
+                <br />
+                <b>Вы можете перетаскивать мышкой</b> чтобы позиционировать дерево как вам удобно.<br />
+                <br />
+            </div>
+        </div>
+
+        <div id="center-container">
+            <div id="infovis"></div>
+        </div>
+
+        <div id="right-container">
+
+            <h4>Ориентация дерева</h4>
+            <table>
+                <tr>
+                    <td>
+                        <label for="r-left">Влево</label>
+                    </td>
+                    <td>
+                        <input type="radio" id="r-left" name="orientation" value="left" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="r-top">Вверх </label>
+                    </td>
+                    <td>
+                        <input type="radio" id="r-top" name="orientation" checked="checked"  value="top" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="r-bottom">Вниз </label>
+                    </td>
+                    <td>
+                        <input type="radio" id="r-bottom" name="orientation" value="bottom" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="r-right">Вправо </label>
+                    </td>
+                    <td>
+                        <input type="radio" id="r-right" name="orientation" value="right" />
+                    </td>
+                </tr>
+            </table>
+
+            <h4>Режим отображения</h4>
+            <table>
+                <tr>
+                    <td>
+                        <label for="s-normal">Стандартный </label>
+                    </td>
+                    <td>
+                        <input type="radio" id="s-normal" name="selection" checked="checked" value="normal" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="s-root">Выбранная вершина - корень </label>
+                    </td>
+                    <td>
+                        <input type="radio" id="s-root" name="selection" value="root" />
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+        <div id="log"></div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    var labelType, useGradients, nativeTextSupport, animate;
+
+    (function () {
+        var ua = navigator.userAgent,
+            iStuff = ua.match(/iPhone/i) || ua.match(/iPad/i),
+            typeOfCanvas = typeof HTMLCanvasElement,
+            nativeCanvasSupport = (typeOfCanvas == 'object' || typeOfCanvas == 'function'),
+            textSupport = nativeCanvasSupport
+              && (typeof document.createElement('canvas').getContext('2d').fillText == 'function');
+        //I'm setting this based on the fact that ExCanvas provides text support for IE
+        //and that as of today iPhone/iPad current text support is lame
+        labelType = (!nativeCanvasSupport || (textSupport && !iStuff)) ? 'Native' : 'HTML';
+        nativeTextSupport = labelType == 'Native';
+        useGradients = nativeCanvasSupport;
+        animate = !(iStuff || !nativeCanvasSupport);
+    })();
+
+    var Log = {
+        elem: false,
+        write: function (text) {
+            if (!this.elem)
+                this.elem = document.getElementById('log');
+            this.elem.innerHTML = text;
+            this.elem.style.left = (500 - this.elem.offsetWidth / 2) + 'px';
+        }
+    };
+
+    function ajax(url, success) {
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState != 4) return;
+            success(xhr.responseText);
+        };
+        xhr.send(null);
+    }
+
+    function get(url) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", url, false);
+        xmlHttp.send(null);
+        return xmlHttp.responseText;
+    }
+
+    function init() {
+        //init data
+        var response = get('@Url.Action("GetQueTree")');
+        var treeData = eval('(' + response + ')');
+
+        //end
+        //init Spacetree
+        //Create a new ST instance
+        var st = new $jit.ST({
+            orientation: 'top',
+            //id of viz container element
+            injectInto: 'infovis',
+            //set duration for the animation
+            duration: 800,
+            //set animation transition type
+            transition: $jit.Trans.Quart.easeInOut,
+            //set distance between node and its children
+            levelDistance: 50,
+            //enable panning
+            Navigation: {
+                enable: true,
+                panning: true
+            },
+            //set node and edge styles
+            //set overridable=true for styling individual
+            //nodes or edges
+            Node: {
+                height: 100,
+                width: 100,
+                type: 'rectangle',
+                color: '#aaa',
+                overridable: true
+            },
+
+            Edge: {
+                type: 'bezier',
+                overridable: true
+            },
+
+            onBeforeCompute: function (node) {
+                Log.write("loading " + node.name);
+            },
+
+            onAfterCompute: function () {
+                Log.write("done");
+            },
+
+            //This method is called on DOM label creation.
+            //Use this method to add event handlers and styles to
+            //your node.
+            onCreateLabel: function (label, node) {
+                label.id = node.id;
+                label.innerHTML = node.name;
+                label.onclick = function () {
+                    if (normal.checked) {
+                        st.onClick(node.id);
+                    } else {
+                        st.setRoot(node.id, 'animate');
+                    }
+                };
+                //set label styles
+                var style = label.style;
+                style.width = 95 + 'px';
+                style.height = 98 + 'px';
+                style.cursor = 'pointer';
+                style.color = '#333';
+                style.fontSize = '0.8em';
+                style.textAlign = 'center';
+                style.padding = '3px';
+            },
+
+            //This method is called right before plotting
+            //a node. It's useful for changing an individual node
+            //style properties before plotting it.
+            //The data properties prefixed with a dollar
+            //sign will override the global node style properties.
+            onBeforePlotNode: function (node) {
+                //add some color to the nodes in the path between the
+                //root node and the selected node.
+                if (node.selected) {
+                    node.data.$color = "#ff7";
+                }
+                else {
+                    delete node.data.$color;
+                    //if the node belongs to the last plotted level
+                    if (!node.anySubnode("exist")) {
+                        //count children number
+                        var count = 0;
+                        node.eachSubnode(function (n) { count++; });
+                        //assign a node color based on
+                        //how many children it has
+                        node.data.$color = ['#aaa', '#baa', '#caa', '#daa', '#eaa', '#faa'][count];
+                    }
+                }
+            },
+
+            //This method is called right before plotting
+            //an edge. It's useful for changing an individual edge
+            //style properties before plotting it.
+            //Edge data proprties prefixed with a dollar sign will
+            //override the Edge global style properties.
+            onBeforePlotLine: function (adj) {
+                if (adj.nodeFrom.selected && adj.nodeTo.selected) {
+                    adj.data.$color = "#eed";
+                    adj.data.$lineWidth = 3;
+                }
+                else {
+                    delete adj.data.$color;
+                    delete adj.data.$lineWidth;
+                }
+            }
+        });
+
+        st.canvas.canvases[0].opt.width = 1000;
+
+        //load json data
+        st.loadJSON(treeData);
+        //compute node positions and layout
+        st.compute();
+        //optional: make a translation of the tree
+        st.geom.translate(new $jit.Complex(-200, 0), "current");
+        //emulate a click on the root node.
+        st.onClick(st.root);
+        //end
+        //Add event handlers to switch spacetree orientation.
+        var top = $jit.id('r-top'),
+            left = $jit.id('r-left'),
+            bottom = $jit.id('r-bottom'),
+            right = $jit.id('r-right'),
+            normal = $jit.id('s-normal');
+
+
+        function changeHandler() {
+            if (this.checked) {
+                top.disabled = bottom.disabled = right.disabled = left.disabled = true;
+                st.switchPosition(this.value, "animate", {
+                    onComplete: function () {
+                        top.disabled = bottom.disabled = right.disabled = left.disabled = false;
+                    }
+                });
+            }
+        };
+
+        top.onchange = left.onchange = bottom.onchange = right.onchange = changeHandler;
+        //end
+
+    }
+
+</script>

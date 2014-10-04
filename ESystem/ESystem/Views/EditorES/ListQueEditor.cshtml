@@ -40,7 +40,6 @@
     </table>
 </div>
 <script>
-
     $(".remove-node").click(function (event) {
         event.preventDefault();
         var url = $(this).data('url');
@@ -73,7 +72,6 @@
 
                 completeEdit(parent.data('id'), curEditor.find('input').val(), parent.data('parent'), curEditor.closest('.dynamic-content'), parent);
             }
-
 
             var self = $(this);
             parent = self.closest('tr');

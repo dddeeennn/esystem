@@ -7,9 +7,15 @@ namespace ESystem.Controllers
 {
     public class EditorESController : Controller
     {
+        private readonly TreeNodeFormatter _treeNodeFormatter;
+
+        public EditorESController()
+        {
+            _treeNodeFormatter = new TreeNodeFormatter();
+        }
+
         //
         // GET: /EditorES/
-
         public ActionResult Index()
         {
             NodeStore.Ctx.LevelTree.Clear();
@@ -142,6 +148,17 @@ namespace ESystem.Controllers
         {
             var model = NodeStore.Ctx.GetQuestions();
             return View(model);
+        }
+
+        public ActionResult DisplayQueTree()
+        {
+            return View();
+        }
+
+        public ActionResult GetQueTree()
+        {
+            var model = _treeNodeFormatter.Get().Root;
+            return new JsonCamelCaseResult(model, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SaveQue(int id, string data, int parentId)

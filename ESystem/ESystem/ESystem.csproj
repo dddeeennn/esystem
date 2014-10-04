@@ -176,10 +176,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Answer.cs" />
+    <Compile Include="Infrastructure\JsonCamelCaseResult.cs" />
     <Compile Include="Infrastructure\INode.cs" />
     <Compile Include="Infrastructure\LevelTreeNode.cs" />
     <Compile Include="Infrastructure\NodeHanderService.cs" />
     <Compile Include="Infrastructure\NodeStore.cs" />
+    <Compile Include="Infrastructure\TreeNodeFormatter.cs" />
     <Compile Include="Model1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -190,11 +192,13 @@
     <Compile Include="Infrastructure\Subject.cs" />
     <Compile Include="Models\AnswerListModel.cs" />
     <Compile Include="Models\AnswerModel.cs" />
+    <Compile Include="Models\NodeModel.cs" />
     <Compile Include="Models\QuestionDisplayModel.cs" />
     <Compile Include="Models\QuestionListModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\SubjectListModel.cs" />
     <Compile Include="Models\SubjectModel.cs" />
+    <Compile Include="Models\TreeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +208,79 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\JitExamples\AreaChart\example1.html" />
+    <Content Include="Content\JitExamples\AreaChart\example1.js" />
+    <Content Include="Content\JitExamples\BarChart\example1.html" />
+    <Content Include="Content\JitExamples\BarChart\example1.js" />
+    <Content Include="Content\JitExamples\BarChart\example2.html" />
+    <Content Include="Content\JitExamples\BarChart\example2.js" />
+    <Content Include="Content\JitExamples\css\AreaChart.css" />
+    <Content Include="Content\JitExamples\css\BarChart.css" />
+    <Content Include="Content\JitExamples\css\base.css" />
+    <Content Include="Content\JitExamples\css\col1.png" />
+    <Content Include="Content\JitExamples\css\col2.png" />
+    <Content Include="Content\JitExamples\css\ForceDirected.css" />
+    <Content Include="Content\JitExamples\css\gradient.png" />
+    <Content Include="Content\JitExamples\css\HeatMap.css" />
+    <Content Include="Content\JitExamples\css\Hypertree.css" />
+    <Content Include="Content\JitExamples\css\Icicle.css" />
+    <Content Include="Content\JitExamples\css\Other.css" />
+    <Content Include="Content\JitExamples\css\PieChart.css" />
+    <Content Include="Content\JitExamples\css\RGraph.css" />
+    <Content Include="Content\JitExamples\css\Spacetree.css" />
+    <Content Include="Content\JitExamples\css\Sunburst.css" />
+    <Content Include="Content\JitExamples\css\TimeGraph.css" />
+    <Content Include="Content\JitExamples\css\Treemap.css" />
+    <Content Include="Content\JitExamples\ForceDirected\example1.html" />
+    <Content Include="Content\JitExamples\ForceDirected\example1.js" />
+    <Content Include="Content\JitExamples\ForceDirected\example2.html" />
+    <Content Include="Content\JitExamples\ForceDirected\example2.js" />
+    <Content Include="Content\JitExamples\Hypertree\example1.html" />
+    <Content Include="Content\JitExamples\Hypertree\example1.js" />
+    <Content Include="Content\JitExamples\Hypertree\example2.html" />
+    <Content Include="Content\JitExamples\Hypertree\example2.js" />
+    <Content Include="Content\JitExamples\Hypertree\example3.html" />
+    <Content Include="Content\JitExamples\Hypertree\example3.js" />
+    <Content Include="Content\JitExamples\Icicle\example1.html" />
+    <Content Include="Content\JitExamples\Icicle\example1.js" />
+    <Content Include="Content\JitExamples\Icicle\example2.html" />
+    <Content Include="Content\JitExamples\Icicle\example2.js" />
+    <Content Include="Content\JitExamples\Other\example1.html" />
+    <Content Include="Content\JitExamples\Other\example1.js" />
+    <Content Include="Content\JitExamples\Other\example2.html" />
+    <Content Include="Content\JitExamples\Other\example2.js" />
+    <Content Include="Content\JitExamples\Other\example3.html" />
+    <Content Include="Content\JitExamples\Other\example3.js" />
+    <Content Include="Content\JitExamples\PieChart\example1.html" />
+    <Content Include="Content\JitExamples\PieChart\example1.js" />
+    <Content Include="Content\JitExamples\RGraph\example1.html" />
+    <Content Include="Content\JitExamples\RGraph\example1.js" />
+    <Content Include="Content\JitExamples\RGraph\example2.html" />
+    <Content Include="Content\JitExamples\RGraph\example2.js" />
+    <Content Include="Content\JitExamples\RGraph\example3.html" />
+    <Content Include="Content\JitExamples\RGraph\example3.js" />
+    <Content Include="Content\JitExamples\RGraph\example4.html" />
+    <Content Include="Content\JitExamples\RGraph\example4.js" />
+    <Content Include="Content\JitExamples\Spacetree\example1.html" />
+    <Content Include="Content\JitExamples\Spacetree\example1.js" />
+    <Content Include="Content\JitExamples\Spacetree\example2.html" />
+    <Content Include="Content\JitExamples\Spacetree\example2.js" />
+    <Content Include="Content\JitExamples\Spacetree\example3.html" />
+    <Content Include="Content\JitExamples\Spacetree\example3.js" />
+    <Content Include="Content\JitExamples\Spacetree\example4.html" />
+    <Content Include="Content\JitExamples\Spacetree\example4.js" />
+    <Content Include="Content\JitExamples\Spacetree\example5.html" />
+    <Content Include="Content\JitExamples\Spacetree\example5.js" />
+    <Content Include="Content\JitExamples\Sunburst\example1.html" />
+    <Content Include="Content\JitExamples\Sunburst\example1.js" />
+    <Content Include="Content\JitExamples\Sunburst\example2.html" />
+    <Content Include="Content\JitExamples\Sunburst\example2.js" />
+    <Content Include="Content\JitExamples\Treemap\example1.html" />
+    <Content Include="Content\JitExamples\Treemap\example1.js" />
+    <Content Include="Content\JitExamples\Treemap\example2.html" />
+    <Content Include="Content\JitExamples\Treemap\example2.js" />
+    <Content Include="Content\JitExamples\Treemap\example3.html" />
+    <Content Include="Content\JitExamples\Treemap\example3.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -281,6 +358,9 @@
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\excanvas.js" />
+    <Content Include="Scripts\jit-yc.js" />
+    <Content Include="Scripts\jit.js" />
     <Content Include="Scripts\jquery-1.9.0.js" />
     <Content Include="Scripts\jquery-1.9.0.min.js" />
     <Content Include="Scripts\jquery-1.9.0.min.map" />
@@ -349,6 +429,8 @@
     <Content Include="Views\EditorES\InputSubject.cshtml" />
     <Content Include="Views\DisplayES\DisplaySubject.cshtml" />
     <Content Include="Views\EditorES\ListQueEditor.cshtml" />
+    <Content Include="Views\EditorES\QuestionTree.cshtml" />
+    <Content Include="Views\EditorES\DisplayQueTree.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
