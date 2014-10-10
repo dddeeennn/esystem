@@ -432,6 +432,7 @@
     <Content Include="Views\EditorES\ListQueEditor.cshtml" />
     <Content Include="Views\EditorES\QuestionTree.cshtml" />
     <Content Include="Views\EditorES\DisplayQueTree.cshtml" />
+    <Content Include="Views\EditorES\ListSubjEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

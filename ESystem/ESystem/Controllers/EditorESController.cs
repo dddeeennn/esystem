@@ -150,6 +150,12 @@ namespace ESystem.Controllers
             return View(model);
         }
 
+        public ActionResult ListSubjEditor()
+        {
+            var model = NodeStore.Ctx.GetSubjects();
+            return View(model);
+        }
+
         public ActionResult DisplayQueTree()
         {
             return View();
