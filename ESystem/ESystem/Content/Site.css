@@ -768,3 +768,9 @@ tr.pager td {
 .btn.btn-primary {
     color: #fff;
 }
+
+td a.remove-node {
+    color: #e80c4d !important;
+    cursor: pointer;
+    text-decoration: none;
+}
