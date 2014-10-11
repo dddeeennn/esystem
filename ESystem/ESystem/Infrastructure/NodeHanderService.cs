@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ESystem.Models;
+using WebGrease.Css.Extensions;
 
 namespace ESystem.Infrastructure
 {
@@ -140,8 +141,21 @@ namespace ESystem.Infrastructure
 
         public void RemoveNode(int id)
         {
-            _db.esNodes.First(x => x.id == id).isRemove=true;
+            var toRemove = new List<int>();
+            GetRemoveNodes(id, toRemove);
+            toRemove.ForEach(x => _db.esNodes.First(n => n.id == x).isRemove = true);
             _db.SaveChanges();
+        }
+
+        private void GetRemoveNodes(int idRemoveNode, List<int> toRemoveList)
+        {
+            var toDelete = _db.esNodes.First(n => n.id == idRemoveNode);
+
+            if (!toDelete.isLeaf)
+            {
+                _db.esNodes.Where(x => x.idParentNode == toDelete.id).ForEach(x => GetRemoveNodes(x.id, toRemoveList));
+            }
+            toRemoveList.Add(toDelete.id);
         }
     }
 }
