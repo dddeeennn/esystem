@@ -422,7 +422,7 @@
     <Content Include="Views\EditorES\AddQuestion.cshtml" />
     <Content Include="Views\DisplayES\Index.cshtml" />
     <Content Include="Views\DisplayES\ExecuteES.cshtml" />
-    <Content Include="Views\EditorES\SelectExistingQuestion.cshtml" />
+    <Content Include="Views\EditorES\EditExistingQuestion.cshtml" />
     <Content Include="Views\EditorES\InputQuestion.cshtml" />
     <Content Include="Views\EditorES\AddAnswer.cshtml" />
     <Content Include="Views\EditorES\AddSubject.cshtml" />

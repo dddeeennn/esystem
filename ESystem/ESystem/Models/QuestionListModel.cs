@@ -7,6 +7,7 @@ namespace ESystem.Models
         public List<QuestionModel> Questions { get; set; }
         public string SelectedQuestionId { get; set; }
         public string SelectedQuestionData { get; set; }
+        public int SelectedQuestionParentId { get; set; }
 
         public QuestionListModel()
         {

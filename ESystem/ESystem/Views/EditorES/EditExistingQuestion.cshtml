@@ -1,6 +1,6 @@
 ﻿@model ESystem.Models.QuestionListModel
 @{
-    ViewBag.Title = "SelectExistingQuestion";
+    ViewBag.Title = "EditExistingQuestion";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -34,6 +34,7 @@
         </div>
     </div>
     <input type="hidden" id="SelectedQuestionData" name="SelectedQuestionData" value=""/>
+    <input type="hidden" id="SelectedQuestionParentId" name="SelectedQuestionParentId" value=""/>
 }
 <script type="text/javascript">
     var data = '';
@@ -41,6 +42,7 @@
         data = $('select option:selected').text();
         $('#que-content').text(data);
         $('#SelectedQuestionData').val(data);
+
     });
     
 </script>

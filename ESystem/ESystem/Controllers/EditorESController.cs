@@ -28,7 +28,7 @@ namespace ESystem.Controllers
             return View();
         }
 
-        public ActionResult SelectExistingQuestion()
+        public ActionResult EditExistingQuestion()
         {
             var questions = NodeStore.Ctx.GetQuestions();
 
@@ -41,14 +41,17 @@ namespace ESystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult SelectExistingQuestion(QuestionListModel model)
+        public ActionResult EditExistingQuestion(QuestionListModel model)
         {
-            var que = new QuestionModel(int.Parse(model.SelectedQuestionId), model.SelectedQuestionData);
+            var que = NodeStore.Ctx.GetNode(int.Parse(model.SelectedQuestionId));
+           // var que = new QuestionModel(int.Parse(model.SelectedQuestionId), model.SelectedQuestionData);
 
-            NodeStore.Ctx.InsertQuestion(que);
-            LoadLevelNode(que.Id);
+           // NodeStore.Ctx.InsertQuestion(que);
 
-
+            var levelNode = new LevelTreeNode(new Question(que.Id,que.Data,que.ParentId));
+            levelNode.Answers.AddRange(NodeStore.Ctx.GetAnswers(que.Id));
+            NodeStore.Ctx.LevelTree.Push(levelNode);
+            
             return RedirectToAction("AddAnswer");
         }
 
@@ -78,7 +81,7 @@ namespace ESystem.Controllers
 
             if (NodeStore.TmpNode != null)
             {
-                NodeStore.Ctx.CompleteCreateAnswer(new AnswerModel(levelNode.Answers.Last()), NodeStore.TmpNode.Question.Id);
+                NodeStore.Ctx.CompleteCreateAnswer(new AnswerModel(NodeStore.TmpNode.Answers.Last()), levelNode.Question.Id);
                 NodeStore.TmpNode = null;
             }
 
@@ -95,7 +98,7 @@ namespace ESystem.Controllers
             NodeStore.Ctx.CreateAnswer(model.NewAnswer);
             levelNode.Answers.Add(new Answer(model.NewAnswer.Id, model.NewAnswer.Data, model.NewAnswer.IsLeaf));
 
-            // NodeStore.TmpNode = levelNode;
+            NodeStore.TmpNode = levelNode;
             return RedirectToAction(model.NewAnswer.IsLeaf ? "AddSubject" : "AddQuestion");
         }
 
@@ -107,11 +110,12 @@ namespace ESystem.Controllers
         public ActionResult NextQuestions()
         {
             NodeStore.TmpNode = NodeStore.Ctx.LevelTree.Pop();
+            NodeStore.TmpNode = null;
             if (NodeStore.Ctx.LevelTree.Count > 0)
             {
                 return RedirectToAction("AddAnswer");
             }
-            NodeStore.TmpNode = null;
+            
             return RedirectToAction("AddQuestion");
         }
 
@@ -208,6 +212,9 @@ namespace ESystem.Controllers
             var answer = NodeStore.Ctx.LevelTree.Peek().Answers.Last();
 
             NodeStore.Ctx.CompleteCreateAnswer(new AnswerModel(answer), subject.Id);
+
+            NodeStore.TmpNode = null;
+
             return RedirectToAction("AddAnswer");
         }
     }

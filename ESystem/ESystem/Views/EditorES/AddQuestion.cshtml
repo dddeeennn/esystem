@@ -9,8 +9,8 @@
     <div class="form-group">
         <label>Выбрать из существующих?</label></div>
     <div class="form-group">
-        @Html.ActionLink("Да", "SelectExistingQuestion", null, new { @class = "btn btn-primary" })
-        @Html.ActionLink("Нет", "InputQuestion", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Добавить от существующего вопроса", "EditExistingQuestion", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Ввести новый вопрос", "InputQuestion", null, new { @class = "btn btn-primary" })
         @Html.ActionLink("Завершить редактирование", "Index", "DisplayES",null, new { @class = "btn btn-primary" })
     </div>
 
