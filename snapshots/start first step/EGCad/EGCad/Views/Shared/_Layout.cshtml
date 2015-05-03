@@ -1,0 +1,26 @@
+﻿@{
+	Layout = "_baseLayout.cshtml";
+}
+
+<div id="nav">
+	<a class="btn btn-navbar">
+		<span class="sr-only">Left menu</span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+	</a>
+
+	<div class="btn-sticker-mode">
+		<a href="#" title="pin ON/OFF"><span class="glyphicon"></span></a>
+	</div>
+	
+	@{ Html.RenderAction("Menu", "Navigation"); }
+</div>
+
+<script type="text/javascript">
+	new DynamicSideBar($("#nav"));
+</script>
+<div id="main">
+	@RenderBody()
+</div>
+

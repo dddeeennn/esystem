@@ -100,3 +100,4 @@ C:\Users\161\Documents\GitRepo\ESystem\ESystem\bin\DotNetOpenAuth.OpenId.Relying
 C:\Users\161\Documents\GitRepo\ESystem\ESystem\obj\Debug\ESystem.csprojResolveAssemblyReference.cache
 C:\Users\161\Documents\GitRepo\ESystem\ESystem\obj\Debug\ESystem.dll
 C:\Users\161\Documents\GitRepo\ESystem\ESystem\obj\Debug\ESystem.pdb
+C:\Users\161\Documents\GitRepo\ESystem\ESystem\bin\ESystem.dll.config

@@ -1,0 +1,137 @@
+﻿
+/* side bar styles */
+
+BODY.view-compact #nav .btn-navbar {
+	display: block;
+}
+
+BODY.view-compact #nav .btn-sticker-mode,
+BODY.view-compact #nav > ul {
+	display: none;
+}
+
+BODY.view-compact #nav {
+	width: 45px;
+	/*transition: width 1s ease 0s;*/
+}
+
+	BODY.view-compact #nav.hover {
+		z-index: 10000;
+		border-right: 1px solid #DAE3E9;
+		background-color: #F7F7F7;
+		box-shadow: 1px 0 3px rgba(0, 0, 0, 0.1);
+		width: 170px;
+	}
+
+		BODY.view-compact #nav.hover .btn-navbar {
+			display: none;
+		}
+
+		BODY.view-compact #nav.hover .btn-sticker-mode,
+		BODY.view-compact #nav.hover > ul {
+			display: block;
+		}
+
+
+#nav .btn-navbar {
+	padding: 9px 10px;
+	display: none;
+	margin-top: 9px;
+}
+
+	#nav .btn-navbar .icon-bar {
+		display: block;
+		width: 22px;
+		height: 2px;
+		border-radius: 1px;
+		background: #33455A;
+	}
+
+		#nav .btn-navbar .icon-bar + .icon-bar {
+			margin-top: 4px;
+		}
+
+#nav .btn-sticker-mode {
+	position: absolute;
+	z-index: 2;
+	right: 0;
+}
+
+	#nav .btn-sticker-mode A {
+		display: inline-block;
+		padding: 10px;
+	}
+
+	#nav .btn-sticker-mode A {
+		color: #6E829B;
+	}
+
+		#nav .btn-sticker-mode A:hover {
+			color: #33455A;
+		}
+
+#nav {
+	position: fixed;
+	top: 51px;
+	bottom: 0;
+	margin: 0;
+	width: 170px;
+	overflow: auto;
+	background-color: #F7F7F7;
+	border-right: 1px solid #DAE3E9;
+	box-shadow: -3px 3px 3px -2px #F1F1F3;
+	z-index: 1001;
+}
+
+	#nav > ul {
+		list-style: none outside none;
+		margin-bottom: 0;
+		margin-left: 15px;
+		margin-top: 0;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+
+		#nav > ul > li > a {
+			border-bottom: 1px solid #DAE1E8;
+			box-shadow: 0 2px 1px -1px #FFFFFF;
+			color: #6E829B;
+			display: block;
+			line-height: 21px;
+			margin-bottom: 5px;
+			margin-left: -15px;
+			outline: 0 none;
+			padding: 19px 14px 15px;
+		}
+
+		#nav > ul > li {
+			position: relative;
+		}
+
+			#nav > ul > li.active > a,
+			#nav > ul > li > a:hover {
+				color: #33455A;
+				text-decoration: none;
+			}
+
+			#nav > ul > li.active a {
+				font-weight: 600;
+				text-shadow: 1px 1px 1px #FFFFFF;
+			}
+
+.navbar-brand sup {
+	top: 0;
+}
+
+.body-content {
+	padding-left: 0;
+}
+
+#main {
+	position: relative;
+	margin-left: 185px;
+	margin-bottom: 100px;
+	min-height: 400px;
+	min-width: 400px;
+}
+
